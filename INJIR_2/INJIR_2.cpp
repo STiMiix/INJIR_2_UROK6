@@ -39,13 +39,16 @@ void RenderSceneCB() {									// функция для обратного вы�
 
 	glClear(GL_COLOR_BUFFER_BIT);						// очистили буфер кадра, используя заданный цвет
 	static float Scale = 0.0f;
-	Scale += 0.01f;
+	Scale += 0.3f;
 
 	Pipeline p;
 	p.Rotate(0.0f, Scale, 0.0f); 
-	p.WorldPos(0.0f, 0.0f, 5.0f);
-	p.SetPerspectiveProj(30.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 1.0f, 100.0f);
-
+	p.WorldPos(0.0f, 0.0f, 3.0f);
+	Vector3f CameraPos(0.0f, 0.0f, -3.0f);
+	Vector3f CameraTarget(0.0f, 0.0f, 2.0f);
+	Vector3f CameraUp(0.0f, 1.0f, 0.0f);
+	p.SetCamera(CameraPos, CameraTarget, CameraUp);
+	p.SetPerspectiveProj(60.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 1.0f, 100.0f);
 	glUniformMatrix4fv(gWorldLocation, 1, GL_TRUE, (const GLfloat*)p.GetTrans());
 	glEnableVertexAttribArray(0);					// задали нулевую связь между координатами вершин и параметрами шейдера
 
@@ -67,9 +70,9 @@ void RenderSceneCB() {									// функция для обратного вы�
 static void CreateVertexBuffer()
 {
 	Vector3f vecArrTrngl[4];
-	vecArrTrngl[0] = Vector3f(-1.0f, -1.0f, 0.0f);
-	vecArrTrngl[1] = Vector3f(1.0f, -1.0f, 1.0f);
-	vecArrTrngl[2] = Vector3f(0.0f, -1.0f, -1.0f);
+	vecArrTrngl[0] = Vector3f(-1.0f, -1.0f, 0.5f);
+	vecArrTrngl[1] = Vector3f(0.0f, -1.0f, -1.);
+	vecArrTrngl[2] = Vector3f(1.0f, -1.0f, 0.5f);
 	vecArrTrngl[3] = Vector3f(0.0f, 1.0f, 0.0f);
 
 	glGenBuffers(1, &VBO);
